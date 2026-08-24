@@ -1,0 +1,2546 @@
+{
+ "schema": "jung-wat/stimulus-sets/v1",
+ "themes": {
+  "death_illness": "death & illness",
+  "money": "money",
+  "morality": "morality & conscience",
+  "affection": "affection & friendship",
+  "aggression": "anger & aggression",
+  "pain_fear": "pain, fear & anxiety",
+  "family_love": "family, marriage & sexuality",
+  "mood": "mood",
+  "judgement": "judgement of others",
+  "separation": "separation",
+  "need": "need & hunger",
+  "care": "care & responsibility",
+  "decision": "choice",
+  "fortune": "luck",
+  "age": "age",
+  "body": "body",
+  "colour": "colour",
+  "nature": "nature",
+  "activity": "activity",
+  "quality": "quality",
+  "object": "object",
+  "home": "home",
+  "domestic": "domestic",
+  "speech": "speech",
+  "sensation": "sensation",
+  "place": "place",
+  "travel": "travel",
+  "food": "food",
+  "animal": "animal",
+  "time": "time",
+  "sexuality": "sexuality"
+ },
+ "sets": [
+  {
+   "id": "jung1910",
+   "label": "Jung (1910)",
+   "authors": "C. G. Jung",
+   "year": 1910,
+   "n": 100,
+   "source": "The Association Method, Clark lectures 1909, publ. 1910; English rendering of the Zurich list.",
+   "note": "Order is part of the method. 'to cook' appears twice (11, 20) in the published list.",
+   "explicit": false,
+   "words": [
+    {
+     "w": "head",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "green",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "water",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to sing",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "dead",
+     "pos": "A",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "long",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "ship",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "to pay",
+     "pos": "V",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "window",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "friendly",
+     "pos": "A",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "to cook",
+     "pos": "V",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "to ask",
+     "pos": "V",
+     "theme": "speech",
+     "loaded": false
+    },
+    {
+     "w": "cold",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "stem",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to dance",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "village",
+     "pos": "N",
+     "theme": "place",
+     "loaded": false
+    },
+    {
+     "w": "lake",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "sick",
+     "pos": "A",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "pride",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "to cook",
+     "pos": "V",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "ink",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "angry",
+     "pos": "A",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "needle",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "to swim",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "voyage",
+     "pos": "N",
+     "theme": "travel",
+     "loaded": false
+    },
+    {
+     "w": "blue",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "lamp",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "to sin",
+     "pos": "V",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "bread",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "rich",
+     "pos": "A",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "tree",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to prick",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "pity",
+     "pos": "N",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "yellow",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "mountain",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to die",
+     "pos": "V",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "salt",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "new",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "custom",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": false
+    },
+    {
+     "w": "to pray",
+     "pos": "V",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "money",
+     "pos": "N",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "foolish",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "pamphlet",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "despise",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "finger",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "expensive",
+     "pos": "A",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "bird",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "to fall",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "book",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "unjust",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "frog",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "to part",
+     "pos": "V",
+     "theme": "separation",
+     "loaded": true
+    },
+    {
+     "w": "hunger",
+     "pos": "N",
+     "theme": "need",
+     "loaded": true
+    },
+    {
+     "w": "white",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "child",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to take care",
+     "pos": "V",
+     "theme": "care",
+     "loaded": true
+    },
+    {
+     "w": "lead pencil",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "sad",
+     "pos": "A",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "plum",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "to marry",
+     "pos": "V",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "house",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "dear",
+     "pos": "A",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "glass",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "to quarrel",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "fur",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "big",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "carrot",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "to paint",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "part",
+     "pos": "N",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "old",
+     "pos": "A",
+     "theme": "age",
+     "loaded": true
+    },
+    {
+     "w": "flower",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to beat",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "box",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "wild",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": true
+    },
+    {
+     "w": "family",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to wash",
+     "pos": "V",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "cow",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "friend",
+     "pos": "N",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "luck",
+     "pos": "N",
+     "theme": "fortune",
+     "loaded": true
+    },
+    {
+     "w": "lie",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "deportment",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "narrow",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "brother",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to fear",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "stork",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "false",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "anxiety",
+     "pos": "N",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "to kiss",
+     "pos": "V",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "bride",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "pure",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "door",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "to choose",
+     "pos": "V",
+     "theme": "decision",
+     "loaded": true
+    },
+    {
+     "w": "hay",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "contented",
+     "pos": "A",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "ridicule",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "to sleep",
+     "pos": "V",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "month",
+     "pos": "N",
+     "theme": "time",
+     "loaded": false
+    },
+    {
+     "w": "nice",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "woman",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to abuse",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    }
+   ]
+  },
+  {
+   "id": "jung1910-critical",
+   "label": "Jung (1910), critical words only",
+   "authors": "C. G. Jung",
+   "year": 1910,
+   "n": 48,
+   "source": "Subset of the 1910 list: the emotionally loaded stimuli, in original relative order.",
+   "note": "Our selection of the loaded words (48). No neutral buffers, so expect higher baseline disturbance.",
+   "explicit": false,
+   "words": [
+    {
+     "w": "dead",
+     "pos": "A",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "to pay",
+     "pos": "V",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "friendly",
+     "pos": "A",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "sick",
+     "pos": "A",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "pride",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "angry",
+     "pos": "A",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "to sin",
+     "pos": "V",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "rich",
+     "pos": "A",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "to prick",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "pity",
+     "pos": "N",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "to die",
+     "pos": "V",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "to pray",
+     "pos": "V",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "money",
+     "pos": "N",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "foolish",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "despise",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "expensive",
+     "pos": "A",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "to fall",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "unjust",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "to part",
+     "pos": "V",
+     "theme": "separation",
+     "loaded": true
+    },
+    {
+     "w": "hunger",
+     "pos": "N",
+     "theme": "need",
+     "loaded": true
+    },
+    {
+     "w": "child",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to take care",
+     "pos": "V",
+     "theme": "care",
+     "loaded": true
+    },
+    {
+     "w": "sad",
+     "pos": "A",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "to marry",
+     "pos": "V",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "dear",
+     "pos": "A",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "to quarrel",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "old",
+     "pos": "A",
+     "theme": "age",
+     "loaded": true
+    },
+    {
+     "w": "to beat",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "wild",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": true
+    },
+    {
+     "w": "family",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "friend",
+     "pos": "N",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "luck",
+     "pos": "N",
+     "theme": "fortune",
+     "loaded": true
+    },
+    {
+     "w": "lie",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "deportment",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "brother",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to fear",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "stork",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "false",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "anxiety",
+     "pos": "N",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "to kiss",
+     "pos": "V",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "bride",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "pure",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "to choose",
+     "pos": "V",
+     "theme": "decision",
+     "loaded": true
+    },
+    {
+     "w": "contented",
+     "pos": "A",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "ridicule",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "nice",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "woman",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to abuse",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    }
+   ]
+  },
+  {
+   "id": "jung1910-modern",
+   "label": "Jung (1910), modern English",
+   "authors": "C. G. Jung, adapted",
+   "year": 1910,
+   "n": 100,
+   "source": "Same slots, part of speech, and themes as the 1910 list; dated words replaced.",
+   "note": "Replacements: stem\u2192branch, voyage\u2192journey, pamphlet\u2192leaflet, lead pencil\u2192pencil, deportment\u2192behavior, stork\u2192baby, custom\u2192habit, hay\u2192grass, plum\u2192apple, fur\u2192coat, pity\u2192sympathy, to prick\u2192to sting, contented\u2192satisfied, ridicule\u2192mockery, to part\u2192to leave, to take care\u2192to look after, to abuse\u2192to insult, to beat\u2192to hit, foolish\u2192stupid, unjust\u2192unfair, village\u2192town, dear\u2192loving, second 'to cook'\u2192'to bake'.",
+   "explicit": false,
+   "words": [
+    {
+     "w": "head",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "green",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "water",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to sing",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "dead",
+     "pos": "A",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "long",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "ship",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "to pay",
+     "pos": "V",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "window",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "friendly",
+     "pos": "A",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "to cook",
+     "pos": "V",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "to ask",
+     "pos": "V",
+     "theme": "speech",
+     "loaded": false
+    },
+    {
+     "w": "cold",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "branch",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to dance",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "town",
+     "pos": "N",
+     "theme": "place",
+     "loaded": false
+    },
+    {
+     "w": "lake",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "sick",
+     "pos": "A",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "pride",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "to bake",
+     "pos": "V",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "ink",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "angry",
+     "pos": "A",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "needle",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "to swim",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "journey",
+     "pos": "N",
+     "theme": "travel",
+     "loaded": false
+    },
+    {
+     "w": "blue",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "lamp",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "to sin",
+     "pos": "V",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "bread",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "rich",
+     "pos": "A",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "tree",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to sting",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "sympathy",
+     "pos": "N",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "yellow",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "mountain",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to die",
+     "pos": "V",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "salt",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "new",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "habit",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": false
+    },
+    {
+     "w": "to pray",
+     "pos": "V",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "money",
+     "pos": "N",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "stupid",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "leaflet",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "despise",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "finger",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "expensive",
+     "pos": "A",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "bird",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "to fall",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "book",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "unfair",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "frog",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "to leave",
+     "pos": "V",
+     "theme": "separation",
+     "loaded": true
+    },
+    {
+     "w": "hunger",
+     "pos": "N",
+     "theme": "need",
+     "loaded": true
+    },
+    {
+     "w": "white",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "child",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to look after",
+     "pos": "V",
+     "theme": "care",
+     "loaded": true
+    },
+    {
+     "w": "pencil",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "sad",
+     "pos": "A",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "apple",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "to marry",
+     "pos": "V",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "house",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "loving",
+     "pos": "A",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "glass",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "to quarrel",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "coat",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "big",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "carrot",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "to paint",
+     "pos": "V",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "part",
+     "pos": "N",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "old",
+     "pos": "A",
+     "theme": "age",
+     "loaded": true
+    },
+    {
+     "w": "flower",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "to hit",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "box",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "wild",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": true
+    },
+    {
+     "w": "family",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to wash",
+     "pos": "V",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "cow",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "friend",
+     "pos": "N",
+     "theme": "affection",
+     "loaded": true
+    },
+    {
+     "w": "luck",
+     "pos": "N",
+     "theme": "fortune",
+     "loaded": true
+    },
+    {
+     "w": "lie",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "behavior",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "narrow",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "brother",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to fear",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "baby",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "false",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "anxiety",
+     "pos": "N",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "to kiss",
+     "pos": "V",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "bride",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "pure",
+     "pos": "A",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "door",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "to choose",
+     "pos": "V",
+     "theme": "decision",
+     "loaded": true
+    },
+    {
+     "w": "grass",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "satisfied",
+     "pos": "A",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "mockery",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "to sleep",
+     "pos": "V",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "month",
+     "pos": "N",
+     "theme": "time",
+     "loaded": false
+    },
+    {
+     "w": "nice",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "woman",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "to insult",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    }
+   ]
+  },
+  {
+   "id": "kent-rosanoff1910",
+   "label": "Kent & Rosanoff (1910)",
+   "authors": "G. H. Kent & A. J. Rosanoff",
+   "year": 1910,
+   "n": 100,
+   "source": "A Study of Association in Insanity, American Journal of Insanity 67 (1910). Public domain.",
+   "note": "Deliberately neutral list with population frequency norms (1,000 subjects; later Minnesota 1954, Palermo & Jenkins 1964). Theme/loaded tags are ours.",
+   "explicit": false,
+   "words": [
+    {
+     "w": "table",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "dark",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "music",
+     "pos": "N",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "sickness",
+     "pos": "N",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "man",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "deep",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "soft",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "eating",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "mountain",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "house",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "black",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "mutton",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "comfort",
+     "pos": "N",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "hand",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "short",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "fruit",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "butterfly",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "smooth",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "command",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "chair",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "sweet",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "whistle",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "woman",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "cold",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "slow",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "wish",
+     "pos": "N",
+     "theme": "need",
+     "loaded": true
+    },
+    {
+     "w": "river",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "white",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "beautiful",
+     "pos": "A",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "window",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "rough",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "citizen",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": false
+    },
+    {
+     "w": "foot",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "spider",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "needle",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "red",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "sleep",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "anger",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "carpet",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "girl",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "high",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "working",
+     "pos": "N",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "sour",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "earth",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "trouble",
+     "pos": "N",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "soldier",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "cabbage",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "hard",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "eagle",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "stomach",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "stem",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "lamp",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "dream",
+     "pos": "N",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "yellow",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "bread",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "justice",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "boy",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "light",
+     "pos": "N",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "health",
+     "pos": "N",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "bible",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "memory",
+     "pos": "N",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "sheep",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "bath",
+     "pos": "N",
+     "theme": "domestic",
+     "loaded": false
+    },
+    {
+     "w": "cottage",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "swift",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "blue",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "hungry",
+     "pos": "A",
+     "theme": "need",
+     "loaded": true
+    },
+    {
+     "w": "priest",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "ocean",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "head",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "stove",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "long",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "religion",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "whiskey",
+     "pos": "N",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "child",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "bitter",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "hammer",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "thirsty",
+     "pos": "A",
+     "theme": "need",
+     "loaded": true
+    },
+    {
+     "w": "city",
+     "pos": "N",
+     "theme": "place",
+     "loaded": false
+    },
+    {
+     "w": "square",
+     "pos": "N",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "butter",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "doctor",
+     "pos": "N",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "loud",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "thief",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "lion",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "joy",
+     "pos": "N",
+     "theme": "mood",
+     "loaded": true
+    },
+    {
+     "w": "bed",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "heavy",
+     "pos": "A",
+     "theme": "quality",
+     "loaded": false
+    },
+    {
+     "w": "tobacco",
+     "pos": "N",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "baby",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "moon",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "scissors",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "quiet",
+     "pos": "A",
+     "theme": "sensation",
+     "loaded": false
+    },
+    {
+     "w": "green",
+     "pos": "A",
+     "theme": "colour",
+     "loaded": false
+    },
+    {
+     "w": "salt",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "street",
+     "pos": "N",
+     "theme": "place",
+     "loaded": false
+    },
+    {
+     "w": "king",
+     "pos": "N",
+     "theme": "place",
+     "loaded": false
+    },
+    {
+     "w": "cheese",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "blossom",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "afraid",
+     "pos": "A",
+     "theme": "pain_fear",
+     "loaded": true
+    }
+   ]
+  },
+  {
+   "id": "rapaport1946",
+   "label": "Rapaport, Gill & Schafer (1946)",
+   "authors": "D. Rapaport, M. Gill & R. Schafer",
+   "year": 1946,
+   "n": 60,
+   "source": "Diagnostic Psychological Testing, vol. 2 (1946). Word list reconstructed from secondary sources; verify against the 1968 Holt edition.",
+   "note": "Clinical list with explicit sexual and bodily words by design.",
+   "explicit": true,
+   "words": [
+    {
+     "w": "hat",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "lamp",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "love",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "book",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "father",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "paper",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "breast",
+     "pos": "N",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "curtains",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "trunk",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "drink",
+     "pos": "N",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "party",
+     "pos": "N",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "spring",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "bowel movement",
+     "pos": "N",
+     "theme": "body",
+     "loaded": true
+    },
+    {
+     "w": "rug",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "boy friend",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "chair",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "screen",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "penis",
+     "pos": "N",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "radiator",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "frame",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "suicide",
+     "pos": "N",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "mountain",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "snake",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": true
+    },
+    {
+     "w": "house",
+     "pos": "N",
+     "theme": "home",
+     "loaded": false
+    },
+    {
+     "w": "vagina",
+     "pos": "N",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "tobacco",
+     "pos": "N",
+     "theme": "judgement",
+     "loaded": true
+    },
+    {
+     "w": "mouth",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "horse",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "masturbation",
+     "pos": "N",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "wife",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "table",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "fight",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "beef",
+     "pos": "N",
+     "theme": "food",
+     "loaded": false
+    },
+    {
+     "w": "stomach",
+     "pos": "N",
+     "theme": "body",
+     "loaded": false
+    },
+    {
+     "w": "farm",
+     "pos": "N",
+     "theme": "place",
+     "loaded": false
+    },
+    {
+     "w": "man",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "taxes",
+     "pos": "N",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "nipple",
+     "pos": "N",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "doctor",
+     "pos": "N",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "dirt",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": true
+    },
+    {
+     "w": "cut",
+     "pos": "V",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "movies",
+     "pos": "N",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "cockroach",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": true
+    },
+    {
+     "w": "bite",
+     "pos": "V",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "dog",
+     "pos": "N",
+     "theme": "animal",
+     "loaded": false
+    },
+    {
+     "w": "dance",
+     "pos": "N",
+     "theme": "activity",
+     "loaded": false
+    },
+    {
+     "w": "gun",
+     "pos": "N",
+     "theme": "aggression",
+     "loaded": true
+    },
+    {
+     "w": "water",
+     "pos": "N",
+     "theme": "nature",
+     "loaded": false
+    },
+    {
+     "w": "husband",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "mud",
+     "pos": "N",
+     "theme": "morality",
+     "loaded": false
+    },
+    {
+     "w": "woman",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "fire",
+     "pos": "N",
+     "theme": "pain_fear",
+     "loaded": true
+    },
+    {
+     "w": "suck",
+     "pos": "V",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "money",
+     "pos": "N",
+     "theme": "money",
+     "loaded": true
+    },
+    {
+     "w": "mother",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "hospital",
+     "pos": "N",
+     "theme": "death_illness",
+     "loaded": true
+    },
+    {
+     "w": "girl friend",
+     "pos": "N",
+     "theme": "family_love",
+     "loaded": true
+    },
+    {
+     "w": "taxi",
+     "pos": "N",
+     "theme": "object",
+     "loaded": false
+    },
+    {
+     "w": "intercourse",
+     "pos": "N",
+     "theme": "sexuality",
+     "loaded": true
+    },
+    {
+     "w": "hunger",
+     "pos": "N",
+     "theme": "need",
+     "loaded": true
+    }
+   ]
+  }
+ ]
+}

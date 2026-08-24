@@ -1,0 +1,746 @@
+{
+  "source": "C. G. Jung, 'The Association Method', Clark University lectures (1909), published American Journal of Psychology 21 (1910). English rendering of the Zurich list used in Diagnostische Assoziationsstudien (1904-1906).",
+  "notes": [
+    "Order is part of the method. Jung alternated nouns, adjectives and verbs, and interleaved neutral words with emotionally loaded ones. Do not shuffle by default.",
+    "'to cook' appears twice (positions 11 and 20) in the published 1910 list. Kept for fidelity; expose a config option to substitute the second occurrence if desired.",
+    "Jung read each word aloud. The app may optionally speak the word via TTS; the reaction clock should start when the stimulus is delivered, not when the screen renders.",
+    "meta[] carries part of speech, a theme, and 'loaded' (Jung's emotionally critical stimuli, interleaved among neutral ones). Theme tags are our editorial layer for clustering disturbances, not Jung's own labels."
+  ],
+  "unit": "Jung recorded reaction time in fifths of a second using a stopwatch. Store milliseconds; display fifths.",
+  "words": [
+    "head",
+    "green",
+    "water",
+    "to sing",
+    "dead",
+    "long",
+    "ship",
+    "to pay",
+    "window",
+    "friendly",
+    "to cook",
+    "to ask",
+    "cold",
+    "stem",
+    "to dance",
+    "village",
+    "lake",
+    "sick",
+    "pride",
+    "to cook",
+    "ink",
+    "angry",
+    "needle",
+    "to swim",
+    "voyage",
+    "blue",
+    "lamp",
+    "to sin",
+    "bread",
+    "rich",
+    "tree",
+    "to prick",
+    "pity",
+    "yellow",
+    "mountain",
+    "to die",
+    "salt",
+    "new",
+    "custom",
+    "to pray",
+    "money",
+    "foolish",
+    "pamphlet",
+    "despise",
+    "finger",
+    "expensive",
+    "bird",
+    "to fall",
+    "book",
+    "unjust",
+    "frog",
+    "to part",
+    "hunger",
+    "white",
+    "child",
+    "to take care",
+    "lead pencil",
+    "sad",
+    "plum",
+    "to marry",
+    "house",
+    "dear",
+    "glass",
+    "to quarrel",
+    "fur",
+    "big",
+    "carrot",
+    "to paint",
+    "part",
+    "old",
+    "flower",
+    "to beat",
+    "box",
+    "wild",
+    "family",
+    "to wash",
+    "cow",
+    "friend",
+    "luck",
+    "lie",
+    "deportment",
+    "narrow",
+    "brother",
+    "to fear",
+    "stork",
+    "false",
+    "anxiety",
+    "to kiss",
+    "bride",
+    "pure",
+    "door",
+    "to choose",
+    "hay",
+    "contented",
+    "ridicule",
+    "to sleep",
+    "month",
+    "nice",
+    "woman",
+    "to abuse"
+  ],
+  "meta": [
+    {
+      "word": "head",
+      "pos": "noun",
+      "theme": "body",
+      "loaded": false
+    },
+    {
+      "word": "green",
+      "pos": "adjective",
+      "theme": "colour",
+      "loaded": false
+    },
+    {
+      "word": "water",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "to sing",
+      "pos": "verb",
+      "theme": "activity",
+      "loaded": false
+    },
+    {
+      "word": "dead",
+      "pos": "adjective",
+      "theme": "death_illness",
+      "loaded": true
+    },
+    {
+      "word": "long",
+      "pos": "adjective",
+      "theme": "quality",
+      "loaded": false
+    },
+    {
+      "word": "ship",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "to pay",
+      "pos": "verb",
+      "theme": "money",
+      "loaded": true
+    },
+    {
+      "word": "window",
+      "pos": "noun",
+      "theme": "home",
+      "loaded": false
+    },
+    {
+      "word": "friendly",
+      "pos": "adjective",
+      "theme": "affection",
+      "loaded": true
+    },
+    {
+      "word": "to cook",
+      "pos": "verb",
+      "theme": "domestic",
+      "loaded": false
+    },
+    {
+      "word": "to ask",
+      "pos": "verb",
+      "theme": "speech",
+      "loaded": false
+    },
+    {
+      "word": "cold",
+      "pos": "adjective",
+      "theme": "sensation",
+      "loaded": false
+    },
+    {
+      "word": "stem",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "to dance",
+      "pos": "verb",
+      "theme": "activity",
+      "loaded": false
+    },
+    {
+      "word": "village",
+      "pos": "noun",
+      "theme": "place",
+      "loaded": false
+    },
+    {
+      "word": "lake",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "sick",
+      "pos": "adjective",
+      "theme": "death_illness",
+      "loaded": true
+    },
+    {
+      "word": "pride",
+      "pos": "noun",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "to cook",
+      "pos": "verb",
+      "theme": "domestic",
+      "loaded": false
+    },
+    {
+      "word": "ink",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "angry",
+      "pos": "adjective",
+      "theme": "aggression",
+      "loaded": true
+    },
+    {
+      "word": "needle",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "to swim",
+      "pos": "verb",
+      "theme": "activity",
+      "loaded": false
+    },
+    {
+      "word": "voyage",
+      "pos": "noun",
+      "theme": "travel",
+      "loaded": false
+    },
+    {
+      "word": "blue",
+      "pos": "adjective",
+      "theme": "colour",
+      "loaded": false
+    },
+    {
+      "word": "lamp",
+      "pos": "noun",
+      "theme": "home",
+      "loaded": false
+    },
+    {
+      "word": "to sin",
+      "pos": "verb",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "bread",
+      "pos": "noun",
+      "theme": "food",
+      "loaded": false
+    },
+    {
+      "word": "rich",
+      "pos": "adjective",
+      "theme": "money",
+      "loaded": true
+    },
+    {
+      "word": "tree",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "to prick",
+      "pos": "verb",
+      "theme": "pain_fear",
+      "loaded": true
+    },
+    {
+      "word": "pity",
+      "pos": "noun",
+      "theme": "affection",
+      "loaded": true
+    },
+    {
+      "word": "yellow",
+      "pos": "adjective",
+      "theme": "colour",
+      "loaded": false
+    },
+    {
+      "word": "mountain",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "to die",
+      "pos": "verb",
+      "theme": "death_illness",
+      "loaded": true
+    },
+    {
+      "word": "salt",
+      "pos": "noun",
+      "theme": "food",
+      "loaded": false
+    },
+    {
+      "word": "new",
+      "pos": "adjective",
+      "theme": "quality",
+      "loaded": false
+    },
+    {
+      "word": "custom",
+      "pos": "noun",
+      "theme": "morality",
+      "loaded": false
+    },
+    {
+      "word": "to pray",
+      "pos": "verb",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "money",
+      "pos": "noun",
+      "theme": "money",
+      "loaded": true
+    },
+    {
+      "word": "foolish",
+      "pos": "adjective",
+      "theme": "judgement",
+      "loaded": true
+    },
+    {
+      "word": "pamphlet",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "despise",
+      "pos": "verb",
+      "theme": "aggression",
+      "loaded": true
+    },
+    {
+      "word": "finger",
+      "pos": "noun",
+      "theme": "body",
+      "loaded": false
+    },
+    {
+      "word": "expensive",
+      "pos": "adjective",
+      "theme": "money",
+      "loaded": true
+    },
+    {
+      "word": "bird",
+      "pos": "noun",
+      "theme": "animal",
+      "loaded": false
+    },
+    {
+      "word": "to fall",
+      "pos": "verb",
+      "theme": "pain_fear",
+      "loaded": true
+    },
+    {
+      "word": "book",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "unjust",
+      "pos": "adjective",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "frog",
+      "pos": "noun",
+      "theme": "animal",
+      "loaded": false
+    },
+    {
+      "word": "to part",
+      "pos": "verb",
+      "theme": "separation",
+      "loaded": true
+    },
+    {
+      "word": "hunger",
+      "pos": "noun",
+      "theme": "need",
+      "loaded": true
+    },
+    {
+      "word": "white",
+      "pos": "adjective",
+      "theme": "colour",
+      "loaded": false
+    },
+    {
+      "word": "child",
+      "pos": "noun",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "to take care",
+      "pos": "verb",
+      "theme": "care",
+      "loaded": true
+    },
+    {
+      "word": "lead pencil",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "sad",
+      "pos": "adjective",
+      "theme": "mood",
+      "loaded": true
+    },
+    {
+      "word": "plum",
+      "pos": "noun",
+      "theme": "food",
+      "loaded": false
+    },
+    {
+      "word": "to marry",
+      "pos": "verb",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "house",
+      "pos": "noun",
+      "theme": "home",
+      "loaded": false
+    },
+    {
+      "word": "dear",
+      "pos": "adjective",
+      "theme": "affection",
+      "loaded": true
+    },
+    {
+      "word": "glass",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "to quarrel",
+      "pos": "verb",
+      "theme": "aggression",
+      "loaded": true
+    },
+    {
+      "word": "fur",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "big",
+      "pos": "adjective",
+      "theme": "quality",
+      "loaded": false
+    },
+    {
+      "word": "carrot",
+      "pos": "noun",
+      "theme": "food",
+      "loaded": false
+    },
+    {
+      "word": "to paint",
+      "pos": "verb",
+      "theme": "activity",
+      "loaded": false
+    },
+    {
+      "word": "part",
+      "pos": "noun",
+      "theme": "quality",
+      "loaded": false
+    },
+    {
+      "word": "old",
+      "pos": "adjective",
+      "theme": "age",
+      "loaded": true
+    },
+    {
+      "word": "flower",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "to beat",
+      "pos": "verb",
+      "theme": "aggression",
+      "loaded": true
+    },
+    {
+      "word": "box",
+      "pos": "noun",
+      "theme": "object",
+      "loaded": false
+    },
+    {
+      "word": "wild",
+      "pos": "adjective",
+      "theme": "quality",
+      "loaded": true
+    },
+    {
+      "word": "family",
+      "pos": "noun",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "to wash",
+      "pos": "verb",
+      "theme": "domestic",
+      "loaded": false
+    },
+    {
+      "word": "cow",
+      "pos": "noun",
+      "theme": "animal",
+      "loaded": false
+    },
+    {
+      "word": "friend",
+      "pos": "noun",
+      "theme": "affection",
+      "loaded": true
+    },
+    {
+      "word": "luck",
+      "pos": "noun",
+      "theme": "fortune",
+      "loaded": true
+    },
+    {
+      "word": "lie",
+      "pos": "noun",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "deportment",
+      "pos": "noun",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "narrow",
+      "pos": "adjective",
+      "theme": "quality",
+      "loaded": false
+    },
+    {
+      "word": "brother",
+      "pos": "noun",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "to fear",
+      "pos": "verb",
+      "theme": "pain_fear",
+      "loaded": true
+    },
+    {
+      "word": "stork",
+      "pos": "noun",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "false",
+      "pos": "adjective",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "anxiety",
+      "pos": "noun",
+      "theme": "pain_fear",
+      "loaded": true
+    },
+    {
+      "word": "to kiss",
+      "pos": "verb",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "bride",
+      "pos": "noun",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "pure",
+      "pos": "adjective",
+      "theme": "morality",
+      "loaded": true
+    },
+    {
+      "word": "door",
+      "pos": "noun",
+      "theme": "home",
+      "loaded": false
+    },
+    {
+      "word": "to choose",
+      "pos": "verb",
+      "theme": "decision",
+      "loaded": true
+    },
+    {
+      "word": "hay",
+      "pos": "noun",
+      "theme": "nature",
+      "loaded": false
+    },
+    {
+      "word": "contented",
+      "pos": "adjective",
+      "theme": "mood",
+      "loaded": true
+    },
+    {
+      "word": "ridicule",
+      "pos": "noun",
+      "theme": "aggression",
+      "loaded": true
+    },
+    {
+      "word": "to sleep",
+      "pos": "verb",
+      "theme": "body",
+      "loaded": false
+    },
+    {
+      "word": "month",
+      "pos": "noun",
+      "theme": "time",
+      "loaded": false
+    },
+    {
+      "word": "nice",
+      "pos": "adjective",
+      "theme": "judgement",
+      "loaded": true
+    },
+    {
+      "word": "woman",
+      "pos": "noun",
+      "theme": "family_love",
+      "loaded": true
+    },
+    {
+      "word": "to abuse",
+      "pos": "verb",
+      "theme": "aggression",
+      "loaded": true
+    }
+  ],
+  "themes": {
+    "death_illness": "death & illness",
+    "money": "money",
+    "morality": "morality & conscience",
+    "affection": "affection & friendship",
+    "aggression": "anger & aggression",
+    "pain_fear": "pain, fear & anxiety",
+    "family_love": "family, marriage & sexuality",
+    "mood": "mood",
+    "judgement": "judgement of others",
+    "separation": "separation",
+    "need": "need & hunger",
+    "care": "care & responsibility",
+    "decision": "choice",
+    "fortune": "luck",
+    "age": "age",
+    "body": "body",
+    "colour": "colour",
+    "nature": "nature",
+    "activity": "activity",
+    "quality": "quality",
+    "object": "object",
+    "home": "home",
+    "domestic": "domestic",
+    "speech": "speech",
+    "sensation": "sensation",
+    "place": "place",
+    "travel": "travel",
+    "food": "food",
+    "animal": "animal",
+    "time": "time"
+  }
+}

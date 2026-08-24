@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Association — word association protocol</title>
+<style>
+  :root {
+    --paper: #EEF0EE;
+    --ink: #1C2025;
+    --graphite: #5E6670;
+    --rule: #C9CED1;
+    --chrono: #2F5D8A;
+    --flag: #B3202E;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+  main { width: 100%; max-width: 640px; margin: 0 auto; padding: 20px 20px 48px; flex: 1; }
+
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--graphite); }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: 30px; margin: 6px 0 4px; letter-spacing: -.01em; }
+  p { line-height: 1.5; margin: 8px 0; }
+  .muted { color: var(--graphite); font-size: 14px; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 20px 0; }
+
+  label.field { display: block; margin: 14px 0 0; font-size: 13px; color: var(--graphite); }
+  input[type=text], select {
+    width: 100%; margin-top: 6px; padding: 10px 12px; font: 16px var(--sans); color: var(--ink);
+    background: #fff; border: 1px solid var(--rule); border-radius: 4px;
+  }
+  input[type=file] { display: block; margin-top: 6px; font-size: 14px; }
+  textarea { width: 100%; margin-top: 12px; padding: 10px 12px; font: 13px var(--mono); color: var(--ink); background: #fff; border: 1px solid var(--rule); border-radius: 4px; resize: vertical; }
+  input[type=text]:focus, select:focus, textarea:focus, button:focus-visible { outline: 2px solid var(--chrono); outline-offset: 2px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row > * { flex: 1 1 160px; }
+  .check { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14px; }
+  .check input { width: 18px; height: 18px; margin: 0; }
+
+  button { font: 15px var(--sans); padding: 12px 18px; border-radius: 4px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; }
+  button.secondary { background: transparent; color: var(--ink); }
+  button.quiet { background: transparent; color: var(--graphite); border-color: transparent; padding: 8px 10px; }
+  button:disabled { opacity: .45; cursor: default; }
+  .actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+
+  /* ---- test screen ---- */
+  .progress { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--graphite); }
+  .track { height: 2px; background: var(--rule); margin: 8px 0 0; }
+  .track > div { height: 100%; background: var(--ink); width: 0; transition: width .2s; }
+
+  .card { margin: 18vh 0 0; text-align: center; }
+  .stimulus { font-family: var(--serif); font-size: clamp(44px, 12vw, 72px); line-height: 1.05; letter-spacing: -.015em; min-height: 1.1em; }
+  .stimulus.hidden { visibility: hidden; }
+  .chrono { margin-top: 18px; font-family: var(--mono); font-size: 20px; color: var(--chrono); font-variant-numeric: tabular-nums; }
+  .chrono small { font-size: 12px; color: var(--graphite); margin-left: 6px; }
+  .chrono.stopped #secs { color: var(--ink); }
+
+  .capture { margin-top: 34px; }
+  .heard { font-family: var(--serif); font-size: 22px; min-height: 1.4em; }
+  .heard.interim { color: var(--graphite); font-style: italic; }
+  .mic-state { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--graphite); margin-top: 8px; }
+  .mic-state .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--rule); margin-right: 6px; vertical-align: middle; }
+  .mic-state.live .dot { background: var(--flag); animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .3; } }
+  @media (prefers-reduced-motion: reduce) { .mic-state.live .dot { animation: none; } .track > div { transition: none; } }
+
+  .typebox { display: flex; gap: 8px; }
+  .typebox input { flex: 1; font-family: var(--serif); font-size: 22px; padding: 12px; }
+
+  .last { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--rule); text-align: left; }
+  .lastline { font-family: var(--serif); font-size: 20px; margin: 4px 0 8px; }
+  .fixed { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--chrono); margin-left: 10px; }
+  .alts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .alts button { background: #fff; color: var(--ink); border: 1px solid var(--rule); padding: 8px 14px; font-family: var(--serif); font-size: 17px; }
+  .alts button.chosen { border-color: var(--ink); }
+  .fixrow { display: flex; gap: 8px; margin-top: 10px; }
+  .fixrow input { flex: 1; font-size: 15px; padding: 8px 10px; }
+  .readystate { text-align: center; margin-top: 18vh; }
+  .readystate .stimulus { color: var(--graphite); font-size: 28px; }
+
+  /* ---- results ---- */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+  .stat { border-top: 1px solid var(--ink); padding-top: 8px; }
+  .stat b { display: block; font-family: var(--mono); font-size: 20px; font-weight: 400; }
+  .stat span { font-size: 12px; color: var(--graphite); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--graphite); font-weight: 400; padding: 8px 4px; border-bottom: 1px solid var(--ink); }
+  td { padding: 9px 4px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  td.n { font-family: var(--mono); color: var(--graphite); width: 34px; }
+  td.w { font-family: var(--serif); font-size: 16px; }
+  td.r { font-family: var(--serif); font-size: 16px; }
+  td.t, td.c { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.flagged td.t, tr.flagged td.c.low { color: var(--flag); }
+  tr.flagged td.w { font-weight: 600; }
+  tr.marked .tag:not(.type):not(.ctx) { border-color: var(--graphite); color: var(--graphite); }
+  tr.investigate td { background: rgba(179,32,46,.05); }
+  .tags { margin-top: 4px; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border: 1px solid var(--flag); color: var(--flag); margin: 2px 4px 0 0; border-radius: 2px; }
+  .tag.ctx { border-color: var(--graphite); color: var(--graphite); }
+  .tag.type { border-color: var(--rule); color: var(--graphite); background: #fff; }
+  .ld { color: var(--chrono); margin-left: 2px; }
+  .profile { margin: 18px 0 6px; }
+  .rtype { font-family: var(--serif); font-size: 28px; margin: 2px 0 8px; }
+  .shares { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--graphite); }
+  .shares b { font-family: var(--mono); font-weight: 400; color: var(--ink); }
+  .themes { margin-top: 14px; }
+  .themes td.hot { color: var(--flag); }
+  .legend { font-size: 13px; color: var(--graphite); line-height: 1.6; }
+  .note { border-left: 2px solid var(--chrono); padding: 6px 12px; font-size: 13px; color: var(--graphite); margin: 14px 0; }
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+
+<!-- ================= SETUP ================= -->
+<section id="setup">
+  <div class="eyebrow">Protocol · Phase 1 · Capture</div>
+  <h1>Word association</h1>
+  <p class="muted">One hundred stimulus words, in Jung's original order. Answer each with the first word that comes to mind. Reaction time is recorded to the millisecond and also kept in Jung's fifths of a second.</p>
+  <hr>
+  <div class="row">
+    <label class="field">Subject label
+      <input type="text" id="subject" placeholder="e.g. S-01" autocomplete="off">
+    </label>
+    <label class="field">Input mode
+      <select id="mode">
+        <option value="mic">Microphone (preferred)</option>
+        <option value="type">Typing</option>
+      </select>
+    </label>
+  </div>
+  <label class="field">Stimulus set
+    <select id="set"></select>
+  </label>
+  <p class="muted" id="setnote" style="margin-top:6px"></p>
+  <div class="row">
+    <label class="field">Words to run
+      <select id="count"></select>
+    </label>
+    <label class="field">Relatedness scorer URL <span class="muted">(blank = local heuristic)</span>
+      <input type="text" id="backend" placeholder="http://localhost:8000" autocomplete="off">
+    </label>
+  </div>
+  <label class="check"><input type="checkbox" id="localmodel" checked> Score on this device <span class="muted">(downloads an open-source 23 MB model once; used when no scorer URL is set)</span></label>
+  <label class="check"><input type="checkbox" id="speak" checked> Read each word aloud (Jung spoke the stimulus)</label>
+  <label class="check"><input type="checkbox" id="autoadvance" checked> Advance automatically after a response</label>
+  <label class="check"><input type="checkbox" id="shuffle"> Shuffle the order <span class="muted">(the published order is part of the method)</span></label>
+  <div id="miccap" class="note hide">Speech recognition isn't available here. If this page is embedded in a chat, open the file directly in Chrome or Safari to use the microphone. Typing mode works everywhere.</div>
+  <div class="actions">
+    <button id="start">Begin</button>
+  </div>
+  <hr>
+  <div class="eyebrow">Saved session</div>
+  <label class="field">Import an exported JSON file
+    <input type="file" id="impfile" accept=".json,application/json">
+  </label>
+  <textarea id="imptext" rows="3" placeholder="…or paste the session JSON here"></textarea>
+  <div class="actions" style="margin-top:12px">
+    <button class="secondary" id="impgo">Open in analysis</button>
+  </div>
+  <div id="imperr" class="note hide"></div>
+  <p class="muted" style="margin-top:24px">Nothing leaves this page except the word pairs sent to the scorer URL you set. Results export as JSON. Imported sessions are re-scored against the scorer URL if one is set.</p>
+</section>
+
+<!-- ================= TEST ================= -->
+<section id="test" class="hide">
+  <div class="progress"><span id="pos">1 / 100</span><span id="sub"></span></div>
+  <div class="track"><div id="bar"></div></div>
+
+  <div id="ready" class="readystate">
+    <div class="stimulus">Ready.</div>
+    <p class="muted">Say or type the first word that comes to mind. Don't think it over.</p>
+    <p class="muted" id="modelstate"></p>
+    <p class="muted" id="micnote">The microphone opens once and stays on until the session ends. With the word read aloud, headphones keep the speaker out of the recording.</p>
+    <div class="actions" style="justify-content:center"><button id="go">Show first word</button></div>
+  </div>
+
+  <div id="trial" class="card hide">
+    <div class="stimulus" id="word"></div>
+    <div class="chrono"><span id="secs">0.0</span><small>s</small> <small id="fifths">0 fifths</small></div>
+
+    <div class="capture">
+      <div id="micpane">
+        <div class="heard" id="heard"></div>
+        <div class="mic-state" id="micstate"><span class="dot"></span><span>standing by</span></div>
+      </div>
+      <div id="typepane" class="typebox hide">
+        <input type="text" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="">
+        <button id="submit">Next</button>
+      </div>
+    </div>
+    <div class="actions" style="justify-content:center">
+      <button class="quiet" id="skip">No response</button>
+      <button class="quiet" id="stop">End session</button>
+    </div>
+    <div id="laststrip" class="last hide">
+      <div class="eyebrow">Previous · <span id="lastword"></span></div>
+      <div class="lastline"><span id="lastresp"></span><span id="lastfixed" class="fixed hide">corrected</span></div>
+      <div class="alts" id="alts"></div>
+      <div class="fixrow"><input type="text" id="fix" autocomplete="off" autocapitalize="off" placeholder="or type what you said"><button class="quiet" id="fixgo">Fix</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+<section id="results" class="hide">
+  <div class="eyebrow">Protocol sheet</div>
+  <h1 id="rtitle">Results</h1>
+  <div class="stats">
+    <div class="stat"><b id="s_median">–</b><span>median RT (Jung's "probable mean")</span></div>
+    <div class="stat"><b id="s_flag">–</b><span>responses disturbed</span></div>
+    <div class="stat"><b id="s_scorer">–</b><span>relatedness scorer</span></div>
+  </div>
+  <div class="note" id="scorenote"></div>
+  <div id="profile" class="profile"></div>
+  <table id="themes" class="themes"></table>
+  <div class="eyebrow" style="margin-top:24px">Protocol</div>
+  <table>
+    <thead><tr><th>#</th><th>Stimulus</th><th>Response</th><th>RT</th><th>×med</th><th>Rel.</th></tr></thead>
+    <tbody id="ledger"></tbody>
+  </table>
+  <hr>
+  <p class="legend">
+    <b style="color:var(--flag)">Carmine</b> marks a disturbed response: a non-timing indicator, or reaction time at least twice the median, or a long reaction time together with another indicator. Relatedness is recorded for later analysis but does not flag on its own. A grey LONG RT tag alone means above the subject's median (Jung's probable mean), which by itself is weak. The ×med column is how many times the median that reaction took.
+    A shaded row is the word <em>before</em> a flagged one and is queued for investigation. A dot by the number marks a stimulus tagged as emotionally loaded. Number is presentation order; the export also carries each word's position in its source list.
+    Grey tags give the association type in Jung &amp; Riklin's scheme: inner (meaning), outer (habit or co-occurrence), clang (sound), remainder (failure, repetition, far-fetched), egocentric (personal reference).
+    RT is shown in seconds; the export also carries milliseconds and Jung's fifths of a second.
+  </p>
+  <div class="actions">
+    <button id="export">Export JSON</button>
+    <button class="secondary" id="again">New session</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ------------------------------------------------------------------
+   Stimulus sets: see shared/stimulus_sets.json (five sets, each word tagged pos/theme/loaded).
+   In the Claude Code build, import from shared/ instead of inlining.
+------------------------------------------------------------------- */
+const SETS = {"themes":{"death_illness":"death & illness","money":"money","morality":"morality & conscience","affection":"affection & friendship","aggression":"anger & aggression","pain_fear":"pain, fear & anxiety","family_love":"family, marriage & sexuality","mood":"mood","judgement":"judgement of others","separation":"separation","need":"need & hunger","care":"care & responsibility","decision":"choice","fortune":"luck","age":"age","body":"body","colour":"colour","nature":"nature","activity":"activity","quality":"quality","object":"object","home":"home","domestic":"domestic","speech":"speech","sensation":"sensation","place":"place","travel":"travel","food":"food","animal":"animal","time":"time","sexuality":"sexuality"},"sets":[{"id":"jung1910","label":"Jung (1910)","authors":"C. G. Jung","year":1910,"n":100,"source":"The Association Method, Clark lectures 1909, publ. 1910; English rendering of the Zurich list.","note":"Order is part of the method. 'to cook' appears twice (11, 20) in the published list.","explicit":false,"words":[["head","N","body",0],["green","A","colour",0],["water","N","nature",0],["to sing","V","activity",0],["dead","A","death_illness",1],["long","A","quality",0],["ship","N","object",0],["to pay","V","money",1],["window","N","home",0],["friendly","A","affection",1],["to cook","V","domestic",0],["to ask","V","speech",0],["cold","A","sensation",0],["stem","N","nature",0],["to dance","V","activity",0],["village","N","place",0],["lake","N","nature",0],["sick","A","death_illness",1],["pride","N","morality",1],["to cook","V","domestic",0],["ink","N","object",0],["angry","A","aggression",1],["needle","N","object",0],["to swim","V","activity",0],["voyage","N","travel",0],["blue","A","colour",0],["lamp","N","home",0],["to sin","V","morality",1],["bread","N","food",0],["rich","A","money",1],["tree","N","nature",0],["to prick","V","pain_fear",1],["pity","N","affection",1],["yellow","A","colour",0],["mountain","N","nature",0],["to die","V","death_illness",1],["salt","N","food",0],["new","A","quality",0],["custom","N","morality",0],["to pray","V","morality",1],["money","N","money",1],["foolish","A","judgement",1],["pamphlet","N","object",0],["despise","V","aggression",1],["finger","N","body",0],["expensive","A","money",1],["bird","N","animal",0],["to fall","V","pain_fear",1],["book","N","object",0],["unjust","A","morality",1],["frog","N","animal",0],["to part","V","separation",1],["hunger","N","need",1],["white","A","colour",0],["child","N","family_love",1],["to take care","V","care",1],["lead pencil","N","object",0],["sad","A","mood",1],["plum","N","food",0],["to marry","V","family_love",1],["house","N","home",0],["dear","A","affection",1],["glass","N","object",0],["to quarrel","V","aggression",1],["fur","N","object",0],["big","A","quality",0],["carrot","N","food",0],["to paint","V","activity",0],["part","N","quality",0],["old","A","age",1],["flower","N","nature",0],["to beat","V","aggression",1],["box","N","object",0],["wild","A","quality",1],["family","N","family_love",1],["to wash","V","domestic",0],["cow","N","animal",0],["friend","N","affection",1],["luck","N","fortune",1],["lie","N","morality",1],["deportment","N","morality",1],["narrow","A","quality",0],["brother","N","family_love",1],["to fear","V","pain_fear",1],["stork","N","family_love",1],["false","A","morality",1],["anxiety","N","pain_fear",1],["to kiss","V","family_love",1],["bride","N","family_love",1],["pure","A","morality",1],["door","N","home",0],["to choose","V","decision",1],["hay","N","nature",0],["contented","A","mood",1],["ridicule","N","aggression",1],["to sleep","V","body",0],["month","N","time",0],["nice","A","judgement",1],["woman","N","family_love",1],["to abuse","V","aggression",1]]},{"id":"jung1910-critical","label":"Jung (1910), critical words only","authors":"C. G. Jung","year":1910,"n":48,"source":"Subset of the 1910 list: the emotionally loaded stimuli, in original relative order.","note":"Our selection of the loaded words (48). No neutral buffers, so expect higher baseline disturbance.","explicit":false,"words":[["dead","A","death_illness",1],["to pay","V","money",1],["friendly","A","affection",1],["sick","A","death_illness",1],["pride","N","morality",1],["angry","A","aggression",1],["to sin","V","morality",1],["rich","A","money",1],["to prick","V","pain_fear",1],["pity","N","affection",1],["to die","V","death_illness",1],["to pray","V","morality",1],["money","N","money",1],["foolish","A","judgement",1],["despise","V","aggression",1],["expensive","A","money",1],["to fall","V","pain_fear",1],["unjust","A","morality",1],["to part","V","separation",1],["hunger","N","need",1],["child","N","family_love",1],["to take care","V","care",1],["sad","A","mood",1],["to marry","V","family_love",1],["dear","A","affection",1],["to quarrel","V","aggression",1],["old","A","age",1],["to beat","V","aggression",1],["wild","A","quality",1],["family","N","family_love",1],["friend","N","affection",1],["luck","N","fortune",1],["lie","N","morality",1],["deportment","N","morality",1],["brother","N","family_love",1],["to fear","V","pain_fear",1],["stork","N","family_love",1],["false","A","morality",1],["anxiety","N","pain_fear",1],["to kiss","V","family_love",1],["bride","N","family_love",1],["pure","A","morality",1],["to choose","V","decision",1],["contented","A","mood",1],["ridicule","N","aggression",1],["nice","A","judgement",1],["woman","N","family_love",1],["to abuse","V","aggression",1]]},{"id":"jung1910-modern","label":"Jung (1910), modern English","authors":"C. G. Jung, adapted","year":1910,"n":100,"source":"Same slots, part of speech, and themes as the 1910 list; dated words replaced.","note":"Replacements: stem\u2192branch, voyage\u2192journey, pamphlet\u2192leaflet, lead pencil\u2192pencil, deportment\u2192behavior, stork\u2192baby, custom\u2192habit, hay\u2192grass, plum\u2192apple, fur\u2192coat, pity\u2192sympathy, to prick\u2192to sting, contented\u2192satisfied, ridicule\u2192mockery, to part\u2192to leave, to take care\u2192to look after, to abuse\u2192to insult, to beat\u2192to hit, foolish\u2192stupid, unjust\u2192unfair, village\u2192town, dear\u2192loving, second 'to cook'\u2192'to bake'.","explicit":false,"words":[["head","N","body",0],["green","A","colour",0],["water","N","nature",0],["to sing","V","activity",0],["dead","A","death_illness",1],["long","A","quality",0],["ship","N","object",0],["to pay","V","money",1],["window","N","home",0],["friendly","A","affection",1],["to cook","V","domestic",0],["to ask","V","speech",0],["cold","A","sensation",0],["branch","N","nature",0],["to dance","V","activity",0],["town","N","place",0],["lake","N","nature",0],["sick","A","death_illness",1],["pride","N","morality",1],["to bake","V","domestic",0],["ink","N","object",0],["angry","A","aggression",1],["needle","N","object",0],["to swim","V","activity",0],["journey","N","travel",0],["blue","A","colour",0],["lamp","N","home",0],["to sin","V","morality",1],["bread","N","food",0],["rich","A","money",1],["tree","N","nature",0],["to sting","V","pain_fear",1],["sympathy","N","affection",1],["yellow","A","colour",0],["mountain","N","nature",0],["to die","V","death_illness",1],["salt","N","food",0],["new","A","quality",0],["habit","N","morality",0],["to pray","V","morality",1],["money","N","money",1],["stupid","A","judgement",1],["leaflet","N","object",0],["despise","V","aggression",1],["finger","N","body",0],["expensive","A","money",1],["bird","N","animal",0],["to fall","V","pain_fear",1],["book","N","object",0],["unfair","A","morality",1],["frog","N","animal",0],["to leave","V","separation",1],["hunger","N","need",1],["white","A","colour",0],["child","N","family_love",1],["to look after","V","care",1],["pencil","N","object",0],["sad","A","mood",1],["apple","N","food",0],["to marry","V","family_love",1],["house","N","home",0],["loving","A","affection",1],["glass","N","object",0],["to quarrel","V","aggression",1],["coat","N","object",0],["big","A","quality",0],["carrot","N","food",0],["to paint","V","activity",0],["part","N","quality",0],["old","A","age",1],["flower","N","nature",0],["to hit","V","aggression",1],["box","N","object",0],["wild","A","quality",1],["family","N","family_love",1],["to wash","V","domestic",0],["cow","N","animal",0],["friend","N","affection",1],["luck","N","fortune",1],["lie","N","morality",1],["behavior","N","morality",1],["narrow","A","quality",0],["brother","N","family_love",1],["to fear","V","pain_fear",1],["baby","N","family_love",1],["false","A","morality",1],["anxiety","N","pain_fear",1],["to kiss","V","family_love",1],["bride","N","family_love",1],["pure","A","morality",1],["door","N","home",0],["to choose","V","decision",1],["grass","N","nature",0],["satisfied","A","mood",1],["mockery","N","aggression",1],["to sleep","V","body",0],["month","N","time",0],["nice","A","judgement",1],["woman","N","family_love",1],["to insult","V","aggression",1]]},{"id":"kent-rosanoff1910","label":"Kent & Rosanoff (1910)","authors":"G. H. Kent & A. J. Rosanoff","year":1910,"n":100,"source":"A Study of Association in Insanity, American Journal of Insanity 67 (1910). Public domain.","note":"Deliberately neutral list with population frequency norms (1,000 subjects; later Minnesota 1954, Palermo & Jenkins 1964). Theme/loaded tags are ours.","explicit":false,"words":[["table","N","object",0],["dark","A","sensation",0],["music","N","activity",0],["sickness","N","death_illness",1],["man","N","family_love",1],["deep","A","quality",0],["soft","A","sensation",0],["eating","N","food",0],["mountain","N","nature",0],["house","N","home",0],["black","A","colour",0],["mutton","N","food",0],["comfort","N","mood",1],["hand","N","body",0],["short","A","quality",0],["fruit","N","food",0],["butterfly","N","animal",0],["smooth","A","sensation",0],["command","N","morality",1],["chair","N","object",0],["sweet","A","sensation",0],["whistle","N","object",0],["woman","N","family_love",1],["cold","A","sensation",0],["slow","A","quality",0],["wish","N","need",1],["river","N","nature",0],["white","A","colour",0],["beautiful","A","judgement",1],["window","N","home",0],["rough","A","sensation",0],["citizen","N","morality",0],["foot","N","body",0],["spider","N","animal",0],["needle","N","object",0],["red","A","colour",0],["sleep","N","body",0],["anger","N","aggression",1],["carpet","N","home",0],["girl","N","family_love",1],["high","A","quality",0],["working","N","activity",0],["sour","A","sensation",0],["earth","N","nature",0],["trouble","N","pain_fear",1],["soldier","N","aggression",1],["cabbage","N","food",0],["hard","A","quality",0],["eagle","N","animal",0],["stomach","N","body",0],["stem","N","nature",0],["lamp","N","home",0],["dream","N","mood",1],["yellow","A","colour",0],["bread","N","food",0],["justice","N","morality",1],["boy","N","family_love",1],["light","N","sensation",0],["health","N","death_illness",1],["bible","N","morality",1],["memory","N","mood",1],["sheep","N","animal",0],["bath","N","domestic",0],["cottage","N","home",0],["swift","A","quality",0],["blue","A","colour",0],["hungry","A","need",1],["priest","N","morality",1],["ocean","N","nature",0],["head","N","body",0],["stove","N","home",0],["long","A","quality",0],["religion","N","morality",1],["whiskey","N","judgement",1],["child","N","family_love",1],["bitter","A","sensation",0],["hammer","N","object",0],["thirsty","A","need",1],["city","N","place",0],["square","N","quality",0],["butter","N","food",0],["doctor","N","death_illness",1],["loud","A","sensation",0],["thief","N","morality",1],["lion","N","animal",0],["joy","N","mood",1],["bed","N","home",0],["heavy","A","quality",0],["tobacco","N","judgement",1],["baby","N","family_love",1],["moon","N","nature",0],["scissors","N","object",0],["quiet","A","sensation",0],["green","A","colour",0],["salt","N","food",0],["street","N","place",0],["king","N","place",0],["cheese","N","food",0],["blossom","N","nature",0],["afraid","A","pain_fear",1]]},{"id":"rapaport1946","label":"Rapaport, Gill & Schafer (1946)","authors":"D. Rapaport, M. Gill & R. Schafer","year":1946,"n":60,"source":"Diagnostic Psychological Testing, vol. 2 (1946). Word list reconstructed from secondary sources; verify against the 1968 Holt edition.","note":"Clinical list with explicit sexual and bodily words by design.","explicit":true,"words":[["hat","N","object",0],["lamp","N","home",0],["love","N","family_love",1],["book","N","object",0],["father","N","family_love",1],["paper","N","object",0],["breast","N","sexuality",1],["curtains","N","home",0],["trunk","N","object",0],["drink","N","judgement",1],["party","N","activity",0],["spring","N","nature",0],["bowel movement","N","body",1],["rug","N","home",0],["boy friend","N","family_love",1],["chair","N","object",0],["screen","N","object",0],["penis","N","sexuality",1],["radiator","N","home",0],["frame","N","object",0],["suicide","N","death_illness",1],["mountain","N","nature",0],["snake","N","animal",1],["house","N","home",0],["vagina","N","sexuality",1],["tobacco","N","judgement",1],["mouth","N","body",0],["horse","N","animal",0],["masturbation","N","sexuality",1],["wife","N","family_love",1],["table","N","object",0],["fight","N","aggression",1],["beef","N","food",0],["stomach","N","body",0],["farm","N","place",0],["man","N","family_love",1],["taxes","N","money",1],["nipple","N","sexuality",1],["doctor","N","death_illness",1],["dirt","N","morality",1],["cut","V","pain_fear",1],["movies","N","activity",0],["cockroach","N","animal",1],["bite","V","aggression",1],["dog","N","animal",0],["dance","N","activity",0],["gun","N","aggression",1],["water","N","nature",0],["husband","N","family_love",1],["mud","N","morality",0],["woman","N","family_love",1],["fire","N","pain_fear",1],["suck","V","sexuality",1],["money","N","money",1],["mother","N","family_love",1],["hospital","N","death_illness",1],["girl friend","N","family_love",1],["taxi","N","object",0],["intercourse","N","sexuality",1],["hunger","N","need",1]]}]};   // shared/stimulus_sets.json, compacted: words as [word, pos, theme, loaded]
+const THEMES = SETS.themes;
+const setById = id => SETS.sets.find(x => x.id === id) || SETS.sets[0];
+/* S.list is the session's stimulus list in presentation order: [{w,pos,theme,loaded,listPos}] */
+const buildList = (set, shuffle, n) => {
+  let items = set.words.map((x, i) => ({ w: x[0], pos: x[1], theme: x[2], loaded: !!x[3], listPos: i + 1 }));
+  if (shuffle) for (let i = items.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [items[i], items[j]] = [items[j], items[i]]; }
+  return items.slice(0, n);
+};
+
+/* ---------------- Config ---------------- */
+const CONFIG = {
+  rtFactor: 1.0,             // Jung's rule: flag anything above the subject's own median ("probable mean")
+  rtFloorMs: 0,              // no absolute floor; rtRatio = reactionMs / median carries severity
+  flagLowRelatedness: false, // relatedness is recorded and shown but does not raise a flag (it over-fired)
+  relatedThreshold: 0.30,    // used only if flagLowRelatedness is on
+  timeoutMs: 12000,
+  investigatePrevious: true, // product requirement: queue the word before a disturbed one
+  investigateNext: false,    // Jung's perseveration runs forward; enable to also queue the following word
+  stereotypyMin: 3,          // same response to >= this many different stimuli
+  patternBreakShare: 0.5     // PATTERN_BREAK only when the dominant type holds >= this share of responses
+};
+
+/* ---------------- Lexical knowledge for the rule classifier ----------------
+   Small tables scoped to Jung's 100 words. The LLM classifier (backend /api/classify) refines these. */
+const ANTONYMS = { dead:['alive','living','life'], long:['short'], friendly:['unfriendly','hostile','mean','rude'], cold:['hot','warm','heat'],
+  sick:['well','healthy','health'], angry:['calm','happy','peaceful'], rich:['poor','poverty'], new:['old'], foolish:['wise','clever','smart','sensible'],
+  expensive:['cheap'], unjust:['just','fair','justice'], white:['black'], sad:['happy','glad','joy'], big:['small','little','tiny'], old:['young','new'],
+  wild:['tame','calm','mild'], narrow:['wide','broad'], false:['true','real','genuine'], pure:['impure','dirty','tainted'], contented:['discontented','unhappy','restless'],
+  nice:['nasty','mean','horrible'], blue:['red'], green:['red'], yellow:['blue'], luck:['misfortune','bad luck'], hunger:['full','food','thirst'],
+  'to sleep':['wake','awake'], 'to die':['live','birth','born'], 'to marry':['divorce','single'], 'to quarrel':['agree','make up','peace'], 'to part':['meet','join','together'],
+  friend:['enemy','foe'], lie:['truth'], pride:['humility','shame'], 'to fear':['brave','courage'], anxiety:['calm','peace'] };
+const STOCK = { head:['ache','hair','shoulders','start','line'], water:['drink','wet','bottle','fall','glass'], 'to sing':['song','sing','bird'], ship:['sail','sea','boat','shape'],
+  'to pay':['bill','money','cash','rent'], window:['glass','pane','door','shopping'], 'to cook':['food','dinner','book','kitchen','meal'], 'to ask':['question','answer'],
+  stem:['flower','cell','leaf','plant'], 'to dance':['music','floor','party'], village:['town','people','green','idiot'], lake:['water','house','district'],
+  ink:['pen','black','paper','well'], needle:['thread','pin','haystack','sew'], 'to swim':['pool','water','fish'], voyage:['sea','ship','trip','bon'],
+  lamp:['light','shade','post','oil'], bread:['butter','water','loaf','jam'], tree:['leaf','leaves','branch','wood','house'], 'to prick':['needle','pin','finger','thorn'],
+  mountain:['high','climb','top','range'], salt:['pepper','sea','water','shaker'], 'to pray':['church','god','kneel','prayer'], money:['cash','bank','coin','box','rich'],
+  pamphlet:['paper','leaflet','book'], finger:['hand','ring','nail','print'], bird:['fly','nest','song','cage','feather'], 'to fall':['down','asleep','over','autumn'],
+  book:['read','page','shelf','worm'], frog:['pond','toad','leg','green','jump','croak'], child:['mother','baby','play','hood'], 'lead pencil':['paper','write','sharpen','eraser'],
+  plum:['tree','pudding','fruit','purple'], 'to marry':['wedding','wife','husband','ring'], house:['home','wife','work','boat'], glass:['water','window','wine','break'],
+  fur:['coat','animal','cat','soft'], carrot:['stick','rabbit','orange','cake'], 'to paint':['brush','picture','wall','canvas'], flower:['pot','bed','garden','rose'],
+  box:['cardboard','office','lid','car'], family:['tree','home','life'], 'to wash':['clothes','hands','dishes','basin'], cow:['milk','boy','bell','field'],
+  lie:['down','detector','truth'], brother:['sister','in law','hood'], stork:['baby','bird','nest'], 'to kiss':['lips','goodbye','love'], bride:['groom','wedding','dress','veil'],
+  door:['open','knob','bell','step','way'], hay:['fever','stack','horse','field'], 'to sleep':['bed','night','dream','tight'], month:['year','week','day','end'], woman:['man','hood','wife'] };
+const EVALUATIVE = new Set(['good','bad','nice','nasty','horrible','awful','lovely','beautiful','ugly','wonderful','terrible','disgusting','great','fine','pleasant','unpleasant',
+  'wrong','right','stupid','silly','evil','wicked','important','boring','fun','hard','difficult','easy','dangerous','scary','sweet','cruel','kind','hate','love','like','dislike']);
+
+/* ---------------- State ---------------- */
+const S = { pending: [], items: [], i: 0, t0: 0, timer: null, timeout: null, mode: 'mic', speak: true, auto: true, backend: '', subject: '', firstInputAt: null, interim: '', ignoreUntil: 0 };
+const $ = id => document.getElementById(id);
+const secs = ms => (ms / 1000).toFixed(1);
+const fifths = ms => (ms / 200).toFixed(1);
+const setChrono = ms => { $('secs').textContent = ms === null ? '—' : secs(ms); $('fifths').textContent = ms === null ? '' : Math.round(ms / 200) + ' fifths'; };
+const norm = s => (s || '').toLowerCase().replace(/^to /, '').replace(/[^a-z' ]/g, '').replace(/\s+/g, ' ').trim();
+
+/* ---------------- Setup ---------------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!SR) { $('miccap').classList.remove('hide'); $('mode').value = 'type'; }
+
+SETS.sets.forEach(x => { const o = document.createElement('option'); o.value = x.id; o.textContent = `${x.label} · ${x.n} words${x.explicit ? ' · explicit' : ''}`; $('set').appendChild(o); });
+function refreshSet() {
+  const set = setById($('set').value);
+  $('setnote').textContent = set.note;
+  const c = $('count'); c.innerHTML = '';
+  [[set.n, `All ${set.n}`], [20, 'First 20 (quick check)'], [10, 'First 10 (smoke test)']].filter(([n]) => n <= set.n).forEach(([n, l]) => { const o = document.createElement('option'); o.value = n; o.textContent = l; c.appendChild(o); });
+}
+$('set').onchange = refreshSet; refreshSet();
+
+$('start').onclick = () => {
+  S.mode = $('mode').value; S.speak = $('speak').checked; S.auto = $('autoadvance').checked;
+  S.backend = $('backend').value.trim().replace(/\/$/, ''); S.subject = $('subject').value.trim() || 'S';
+  S.set = setById($('set').value); S.shuffle = $('shuffle').checked;
+  S.list = buildList(S.set, S.shuffle, +$('count').value);
+  S.items = []; S.i = 0; S.n = S.list.length; S.imported = null; S.pending = [];
+  S.useLocal = $('localmodel').checked && !S.backend;
+  $('modelstate').textContent = '';
+  if (S.useLocal) Local.load();
+  $('laststrip').classList.add('hide');
+  if (S.mode === 'mic' && !SR) S.mode = 'type';
+  $('sub').textContent = S.subject;
+  $('setup').classList.add('hide'); $('test').classList.remove('hide');
+  $('ready').classList.remove('hide'); $('trial').classList.add('hide');
+  $('micnote').classList.toggle('hide', S.mode === 'type'); $('go').textContent = S.mode === 'mic' ? 'Open microphone and begin' : 'Show first word';
+  if (S.mode === 'type') { $('micpane').classList.add('hide'); $('typepane').classList.remove('hide'); }
+  else { $('micpane').classList.remove('hide'); $('typepane').classList.add('hide'); }
+  if (S.speak && 'speechSynthesis' in window) speechSynthesis.getVoices();
+};
+
+$('go').onclick = async () => {
+  $('go').disabled = true;
+  if (S.mode === 'mic') {
+    const ok = await Mic.start();
+    if (!ok) { S.mode = 'type'; $('micpane').classList.add('hide'); $('typepane').classList.remove('hide'); }
+  }
+  $('go').disabled = false;
+  $('ready').classList.add('hide'); $('trial').classList.remove('hide'); present();
+};
+
+/* ---------------- Presenting a word ---------------- */
+function present() {
+  if (S.i >= S.n) return finish();
+  const w = S.list[S.i].w;
+  $('pos').textContent = `${S.i + 1} / ${S.n}`;
+  $('bar').style.width = (S.i / S.n * 100) + '%';
+  $('word').textContent = w; $('word').classList.add('hidden');
+  $('heard').textContent = ''; $('heard').classList.remove('interim');
+  $('typed').value = ''; document.querySelector('.chrono').classList.remove('stopped'); setChrono(0);
+  S.firstInputAt = null; S.interim = '';
+
+  if (S.speak && 'speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(w); u.rate = 0.95; u.lang = 'en-US';
+    let started = false;
+    S.ignoreUntil = Infinity;
+    u.onstart = () => { started = true; $('word').classList.remove('hidden'); startClock(); };
+    u.onend = () => { S.ignoreUntil = performance.now() + 250; if (!started) { $('word').classList.remove('hidden'); startClock(); } };
+    u.onerror = u.onend;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+    setTimeout(() => { if (!started && !S.t0) u.onend(); }, 800);
+  } else {
+    setTimeout(() => { S.ignoreUntil = 0; $('word').classList.remove('hidden'); startClock(); }, 400);
+  }
+}
+
+function startClock() {
+  S.t0 = performance.now();
+  clearInterval(S.timer);
+  S.timer = setInterval(() => setChrono(performance.now() - S.t0), 50);
+  clearTimeout(S.timeout);
+  S.timeout = setTimeout(() => record('', null, 'timeout'), CONFIG.timeoutMs);
+  if (S.mode === 'mic') Mic.newTrial(); else { $('typed').focus(); }
+}
+
+/* ---------------- Microphone: opened once, kept open for the whole session ---------------- */
+const Mic = (() => {
+  let stream = null, ctx = null, analyser = null, buf = null, rec = null, active = false, raf = null;
+  let floor = 0, floorSamples = 0;
+  const state = $('micstate');
+  const setState = (txt, live) => { state.lastChild.textContent = txt; state.classList.toggle('live', !!live); };
+  const rms = () => { analyser.getFloatTimeDomainData(buf); let s = 0; for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i]; return Math.sqrt(s / buf.length); };
+  function tick() {
+    if (!active) return;
+    const level = rms();
+    if (floorSamples < 40) { floor = (floor * floorSamples + level) / ++floorSamples; }
+    const now = performance.now();
+    if (S.t0 && S.firstInputAt === null && now > S.ignoreUntil && level > Math.max(floor * 3, 0.02)) S.firstInputAt = now;
+    raf = requestAnimationFrame(tick);
+  }
+  function startRecognizer() {
+    if (!SR || !active) return;
+    rec = new SR();
+    rec.lang = 'en-US'; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 5;
+    rec.onstart = () => setState('listening', true);
+    rec.onspeechstart = () => { if (!analyser && S.t0 && S.firstInputAt === null && performance.now() > S.ignoreUntil) S.firstInputAt = performance.now(); };
+    rec.onresult = e => {
+      if (!S.t0 || performance.now() < S.ignoreUntil) return;
+      let txt = '', final = false, alts = [];
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const res = e.results[i]; txt += res[0].transcript; if (res.isFinal) final = true;
+        alts = []; for (let j = 0; j < res.length; j++) alts.push(clean(res[j].transcript));   // alternatives from the latest result
+      }
+      txt = clean(txt);
+      if (!txt) return;
+      if (S.firstInputAt === null) S.firstInputAt = performance.now();
+      S.interim = txt; $('heard').textContent = txt; $('heard').classList.toggle('interim', !final);
+      S.lastAlts = [...new Set(alts.filter(a => a && a !== txt))].slice(0, 4);
+      if (final) record(txt, S.firstInputAt, 'mic');
+    };
+    rec.onerror = e => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { setState('mic blocked', false); active = false; S.mode = 'type'; $('micpane').classList.add('hide'); $('typepane').classList.remove('hide'); $('typed').focus(); }
+    };
+    rec.onend = () => { if (active) setTimeout(startRecognizer, 200); else setState('mic off', false); };
+    try { rec.start(); } catch (err) { setTimeout(startRecognizer, 500); }
+  }
+  function clean(txt) {
+    txt = txt.trim().toLowerCase();
+    const full = S.list[S.i].w.toLowerCase(), bare = full.replace(/^to /, '');
+    if (txt.startsWith(full + ' ')) txt = txt.slice(full.length).trim();
+    else if (txt.startsWith(bare + ' ')) txt = txt.slice(bare.length).trim();
+    return txt;
+  }
+  return {
+    async start() {
+      if (active) return true;
+      active = true; floor = 0; floorSamples = 0;
+      setState('opening mic…', false);
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = ctx.createAnalyser(); analyser.fftSize = 1024; buf = new Float32Array(analyser.fftSize);
+        ctx.createMediaStreamSource(stream).connect(analyser);
+        tick();
+      } catch (err) {
+        analyser = null;
+        if (err && (err.name === 'NotAllowedError' || err.name === 'SecurityError')) { active = false; setState('mic blocked', false); return false; }
+      }
+      startRecognizer();
+      return true;
+    },
+    newTrial() { $('heard').textContent = ''; },
+    stop() {
+      active = false; cancelAnimationFrame(raf);
+      if (rec) { try { rec.onend = null; rec.abort(); } catch (e) {} rec = null; }
+      if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+      if (ctx) { ctx.close(); ctx = null; analyser = null; }
+      setState('mic off', false);
+    }
+  };
+})();
+
+/* ---------------- Typed capture ---------------- */
+$('typed').addEventListener('keydown', e => {
+  if (S.firstInputAt === null && e.key.length === 1) S.firstInputAt = performance.now();
+  if (e.key === 'Enter') { e.preventDefault(); $('submit').click(); }
+});
+$('submit').onclick = () => { const v = $('typed').value.trim(); if (v) record(v, S.firstInputAt, 'type'); };
+$('skip').onclick = () => record('', null, 'skipped');
+$('stop').onclick = () => { clearInterval(S.timer); clearTimeout(S.timeout); S.t0 = 0; finish(); };
+
+/* ---------------- Recording ---------------- */
+function record(response, firstAt, how) {
+  if (!S.t0) return;
+  clearInterval(S.timer); clearTimeout(S.timeout);
+  const now = performance.now();
+  const rt = firstAt !== null ? Math.round(firstAt - S.t0) : null;
+  document.querySelector('.chrono').classList.add('stopped'); setChrono(rt);
+  const m = S.list[S.i];
+  const item = {
+    index: S.i + 1, listPosition: m.listPos, stimulus: m.w, stimulusPos: { N: 'noun', A: 'adjective', V: 'verb' }[m.pos], theme: m.theme, loaded: m.loaded,
+    response, rawResponse: null, corrected: false, reactionMs: rt, reactionFifths: rt === null ? null : +fifths(rt), completionMs: Math.round(now - S.t0),
+    inputMode: how, relatedness: null, relatednessPrev: null, scorer: null, rtRatio: null,
+    assoc: null,      // {type, subtype, evidence, source}
+    flags: []
+  };
+  S.items.push(item); S.t0 = 0;
+  scoreRelatedness(item, S.i > 0 ? S.list[S.i - 1].w : null);
+  showLast(item, how === 'mic' ? S.lastAlts : []);
+  S.i++;
+  if (S.auto) setTimeout(present, 700); else { $('heard').textContent = response || '(no response)'; $('skip').textContent = 'Next word'; $('skip').onclick = () => { $('skip').textContent = 'No response'; $('skip').onclick = () => record('', null, 'skipped'); present(); }; }
+}
+
+
+/* ---------------- One-touch correction of the previous response ----------------
+   After a spoken response is recorded the test moves on, but the previous word stays visible with
+   the recognizer's alternative transcripts as chips. Tapping one (or typing a fix) replaces the
+   response on that item, keeps the original in rawResponse, and re-scores it. Timing is untouched:
+   reaction time was measured at voice onset, before the recognizer guessed anything. */
+function showLast(item, alts) {
+  if (S.mode !== 'mic') return;
+  S.lastItem = item;
+  $('lastword').textContent = item.stimulus;
+  $('lastresp').textContent = item.response || '—';
+  $('lastfixed').classList.add('hide'); $('fix').value = '';
+  const box = $('alts'); box.innerHTML = '';
+  (alts || []).forEach(a => { const b = document.createElement('button'); b.type = 'button'; b.textContent = a; b.onclick = () => correctLast(a, b); box.appendChild(b); });
+  $('laststrip').classList.remove('hide');
+}
+function correctLast(text, btn) {
+  const it = S.lastItem; if (!it) return;
+  text = text.trim(); if (!text || text === it.response) return;
+  if (it.rawResponse === null || it.rawResponse === undefined) it.rawResponse = it.response;
+  it.response = text; it.corrected = true; it.relatedness = null; it.relatednessPrev = null;
+  const k = S.items.indexOf(it);
+  scoreRelatedness(it, k > 0 ? S.items[k - 1].stimulus : null);
+  $('lastresp').textContent = text; $('lastfixed').classList.remove('hide');
+  [...$('alts').children].forEach(b => b.classList.toggle('chosen', b === btn));
+}
+$('fixgo').onclick = () => { correctLast($('fix').value); $('fix').blur(); };
+$('fix').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('fixgo').click(); } });
+$('fix').addEventListener('focus', () => { S.ignoreUntil = Infinity; });      // don't let the mic record keyboard taps as a response
+$('fix').addEventListener('blur', () => { S.ignoreUntil = performance.now() + 200; });
+
+
+/* ---------------- On-device scorer: all-MiniLM-L6-v2 via transformers.js (Apache-2.0) ----------------
+   Used when no scorer URL is set. First run downloads ~23 MB and caches it in the browser. Needs a
+   hosted page with network access; inside a chat preview the import is blocked and we fall back to
+   the lexical placeholder. Same cosine scale as the Python backend, so thresholds carry over. */
+const Local = {
+  pipe: null, loading: null, failed: false,
+  load() {
+    if (this.pipe) return Promise.resolve(true);
+    if (this.loading) return this.loading;
+    const st = $('modelstate');
+    this.loading = (async () => {
+      try {
+        st.textContent = 'Loading on-device scorer…';
+        const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+        env.allowLocalModels = false;
+        this.pipe = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
+          progress_callback: p => { if (p.status === 'progress' && p.file && p.file.endsWith('.onnx')) st.textContent = `Downloading scorer ${Math.round(p.progress || 0)}%`; }
+        });
+        st.textContent = 'On-device scorer ready.';
+        return true;
+      } catch (e) { this.failed = true; st.textContent = 'On-device scorer unavailable here (no network or blocked); relatedness will use a placeholder.'; return false; }
+    })();
+    return this.loading;
+  },
+  async score(pairs) {
+    const texts = []; pairs.forEach(p => { texts.push(norm(p.stimulus) || p.stimulus); texts.push(norm(p.response) || p.response); });
+    const out = await this.pipe(texts, { pooling: 'mean', normalize: true });
+    const v = out.tolist(), scores = [];
+    for (let i = 0; i < pairs.length; i++) { const a = v[2 * i], b = v[2 * i + 1]; let d = 0; for (let k = 0; k < a.length; k++) d += a[k] * b[k]; scores.push(Math.max(0, Math.min(1, d))); }
+    return scores;
+  }
+};
+const LOCAL_NAME = 'all-MiniLM-L6-v2 (on-device)';
+
+/* ---------------- Relatedness scoring (backend MiniLM, on-device MiniLM, or placeholder) ----------------
+   Sends two pairs: (stimulus, response) and (previous stimulus, response). The second one detects
+   perseveration: a response that belongs to the word before. */
+function scoreRelatedness(item, prevStimulus) {
+  const pr = (async () => {
+    if (!item.response) return;
+    const pairs = [{ stimulus: item.stimulus, response: item.response }];
+    if (prevStimulus) pairs.push({ stimulus: prevStimulus, response: item.response });
+    if (S.backend) {
+      try {
+        const res = await fetch(S.backend + '/api/score', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pairs }) });
+        if (res.ok) { const d = await res.json(); item.relatedness = d.scores[0]; item.relatednessPrev = d.scores[1] ?? null; item.scorer = d.scorer; return; }
+      } catch (e) { /* fall through */ }
+    } else if (S.useLocal && !Local.failed) {
+      try {
+        if (await Local.load()) { const sc = await Local.score(pairs); item.relatedness = sc[0]; item.relatednessPrev = sc[1] ?? null; item.scorer = LOCAL_NAME; return; }
+      } catch (e) { /* fall through */ }
+    }
+    item.relatedness = heuristic(item.stimulus, item.response);
+    item.relatednessPrev = prevStimulus ? heuristic(prevStimulus, item.response) : null;
+    item.scorer = 'lexical-heuristic';
+  })();
+  S.pending.push(pr);
+  return pr;
+}
+function heuristic(a, b) {
+  a = norm(a); b = norm(b); if (!a || !b) return 0;
+  if (a === b) return 1;
+  const tri = s => { const t = new Set(); const p = ' ' + s + ' '; for (let i = 0; i < p.length - 2; i++) t.add(p.slice(i, i + 3)); return t; };
+  const A = tri(a), B = tri(b); let inter = 0; A.forEach(x => { if (B.has(x)) inter++; });
+  return Math.min(1, 0.15 + inter / (A.size + B.size - inter));
+}
+
+/* ---------------- Layer 2: association type (Jung & Riklin, rule tier) ----------------
+   type:     inner | outer | clang | remainder | egocentric
+   subtype:  inner: contrast, predicate, definition, coordination(probable)
+             outer: stock (coexistence / speech habit), surface(probable)
+             clang: rhyme, completion, sound
+             remainder: failure, repetition, indirect, misunderstanding(LLM only)
+             egocentric: personal
+   The rules are deliberately conservative; anything they can't place is left to the LLM classifier
+   or to relatedness, and marked source:'rule-probable'. */
+function classifyRule(item) {
+  const stim = item.stimulus, r = norm(item.response), sBare = norm(stim);
+  const ev = [];
+  const out = (type, subtype, source = 'rule') => ({ type, subtype, evidence: ev, source });
+  if (!r) return out('remainder', 'failure');
+  if (r === sBare) return out('remainder', 'repetition');
+  const words = r.split(' ');
+
+  if (/\b(i|me|my|mine|myself|we|our|us)\b/.test(r)) { ev.push('personal pronoun'); return out('egocentric', 'personal'); }
+
+  if ((ANTONYMS[stim] || []).includes(r)) { ev.push('antonym'); return out('inner', 'contrast'); }
+  if ((STOCK[stim] || []).some(x => r === x || r.startsWith(x + ' ') || r.endsWith(' ' + x))) { ev.push('stock pairing'); return out('outer', 'stock'); }
+
+  const rhyme = (a, b) => a !== b && a.length >= 4 && b.length >= 4 && a.slice(-3) === b.slice(-3);
+  const last = words[words.length - 1];
+  if (r.startsWith(sBare) && r.length > sBare.length && words.length === 1) { ev.push('completes the stimulus'); return out('clang', 'completion'); }
+  if (rhyme(sBare, last)) { ev.push('rhymes'); return out('clang', 'rhyme'); }
+  // sound echo: same onset and either a shared 3-letter opening or noticeable trigram overlap (pity->pisces, quarrel->qualms)
+  const onset = words.length === 1 && sBare.length >= 3 && r.length >= 3 && r.slice(0, 2) === sBare.slice(0, 2);
+  if (onset && (r.slice(0, 3) === sBare.slice(0, 3) || heuristic(sBare, r) >= 0.30)) { ev.push('sound echo'); return out('clang', 'sound'); }
+  if (words.length === 1 && sBare.length >= 5 && r.length >= 5 && sBare.slice(-4) === r.slice(-4) && r !== sBare) { ev.push('shared ending'); return out('clang', 'sound'); }
+
+  if (words.length >= 3) {
+    if (/\b(is|are|a|an|the|something|someone|thing|when|which|that|means)\b/.test(r)) { ev.push('defines the stimulus'); return out('inner', 'definition'); }
+    ev.push('sentence'); return out('inner', 'predicate');
+  }
+  if (words.some(w => EVALUATIVE.has(w))) { ev.push('evaluative'); return out('inner', 'predicate'); }
+
+  if (item.relatedness !== null && item.scorer !== 'lexical-heuristic') {
+    if (item.relatedness >= 0.45) { ev.push('semantically close'); return out('inner', 'coordination', 'rule-probable'); }
+    if (item.relatedness >= 0.15) { ev.push('loosely related'); return out('outer', 'surface', 'rule-probable'); }
+    if (onset) { ev.push('same onset, no meaning link'); return out('clang', 'sound', 'rule-probable'); }
+    ev.push('semantically distant'); return out('remainder', 'indirect', 'rule-probable');
+  }
+  return out('unclassified', null, 'rule-probable');
+}
+
+/* Optional LLM tier: POST /api/classify returns the same {type, subtype} shape per item. */
+async function classifyLLM(items) {
+  if (!S.backend) return;
+  try {
+    const body = { items: items.filter(x => x.response).map(x => ({ index: x.index, stimulus: x.stimulus, response: x.response })) };
+    const res = await fetch(S.backend + '/api/classify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (!res.ok) return;
+    const d = await res.json(); if (!d.classifications) return;
+    d.classifications.forEach(c => {
+      const it = items.find(x => x.index === c.index); if (!it) return;
+      // keep hard rule verdicts (repetition, failure, personal pronoun, antonym, stock) but let the model fill probables
+      if (it.assoc.source !== 'rule') it.assoc = { type: c.type, subtype: c.subtype, evidence: [c.reason || 'llm'], source: d.classifier };
+    });
+  } catch (e) { /* rule tier stands */ }
+}
+
+/* ---------------- Layer 3 + 4: flags and session profile ---------------- */
+function analyse(items) {
+  const rts = items.map(x => x.reactionMs).filter(x => x !== null).sort((a, b) => a - b);
+  const median = rts.length ? rts[Math.floor(rts.length / 2)] : 0;
+  const rtCut = Math.max(median * CONFIG.rtFactor, CONFIG.rtFloorMs);
+
+  // stereotypy: same response to several different stimuli
+  const counts = {}; items.forEach(it => { const r = norm(it.response); if (r) counts[r] = (counts[r] || 0) + 1; });
+
+  items.forEach((it, k) => {
+    it.flags = [];
+    it.rtRatio = (it.reactionMs !== null && median) ? +(it.reactionMs / median).toFixed(2) : null;
+    if (!it.assoc) it.assoc = classifyRule(it);
+    const a = it.assoc, r = norm(it.response), prev = items[k - 1];
+    if (!it.response) { it.flags.push('NO_RESPONSE'); return; }
+    if (it.reactionMs !== null && it.reactionMs > rtCut) it.flags.push('LONG_RT');
+    if (CONFIG.flagLowRelatedness && it.relatedness !== null && it.relatedness < CONFIG.relatedThreshold) it.flags.push('LOW_RELATEDNESS');
+    if (a.subtype === 'repetition') it.flags.push('REPEATS_STIMULUS');
+    if (r.split(' ').length > 2) it.flags.push('MULTI_WORD');
+    if (a.type === 'clang') it.flags.push('CLANG');
+    if (a.type === 'egocentric') it.flags.push('EGOCENTRIC');
+    if (counts[r] >= CONFIG.stereotypyMin) it.flags.push('STEREOTYPY');
+    if (prev && prev.response) {
+      const pr = norm(prev.response), ps = norm(prev.stimulus);
+      const lexical = r === pr || r === ps;
+      const semantic = it.relatednessPrev !== null && it.relatedness !== null && it.relatednessPrev > it.relatedness + 0.2 && it.relatednessPrev > 0.35;
+      if (lexical || semantic) it.flags.push('PERSEVERATION');
+    }
+  });
+
+  // subject profile: type shares and Jung's reaction type
+  const answered = items.filter(x => x.response);
+  const share = t => answered.filter(x => x.assoc.type === t).length / Math.max(1, answered.length);
+  const sub = t => answered.filter(x => x.assoc.subtype === t).length / Math.max(1, answered.length);
+  const shares = { inner: share('inner'), outer: share('outer'), clang: share('clang'), remainder: share('remainder'), egocentric: share('egocentric'), unclassified: share('unclassified') };
+  const dominant = Object.entries(shares).filter(([t]) => t !== 'unclassified').sort((a, b) => b[1] - a[1])[0];
+  let reactionType = 'objective';
+  if (shares.egocentric >= 0.15) reactionType = 'egocentric';
+  else if (sub('predicate') >= 0.30) reactionType = 'predicate';
+  else if (sub('definition') >= 0.20) reactionType = 'definition';
+  else if (shares.outer + shares.clang >= 0.50) reactionType = 'superficial';
+
+  // pattern break: a response whose type departs from a strongly dominant type
+  if (dominant && dominant[1] >= CONFIG.patternBreakShare) {
+    items.forEach(it => {
+      if (!it.response) return;
+      const t = it.assoc.type;
+      if (t !== dominant[0] && (t === 'clang' || t === 'remainder' || t === 'egocentric')) it.flags.push('PATTERN_BREAK');
+    });
+  }
+
+  // "disturbed": Jung's above-median rule flags half the responses by construction, so LONG_RT alone
+  // is weak evidence. A response counts as disturbed when it shows a non-RT indicator, or RT >= 2x median,
+  // or LONG_RT together with any other indicator. This drives neighbour investigation and theme counts.
+  const HOT = new Set(['LOW_RELATEDNESS', 'NO_RESPONSE', 'CLANG', 'EGOCENTRIC', 'PERSEVERATION', 'PATTERN_BREAK', 'REPEATS_STIMULUS', 'STEREOTYPY']);
+  items.forEach(it => {
+    const other = it.flags.filter(f => HOT.has(f)).length;
+    it.disturbed = other > 0 || (it.rtRatio !== null && it.rtRatio >= 2) || (it.flags.includes('LONG_RT') && it.flags.length > 1);
+    it.indicatorCount = it.flags.filter(f => !f.startsWith('INVESTIGATE')).length;
+  });
+  items.forEach((it, k) => {
+    if (!it.disturbed) return;
+    if (CONFIG.investigatePrevious && items[k - 1]) items[k - 1].flags.push('INVESTIGATE_PREV');
+    if (CONFIG.investigateNext && items[k + 1]) items[k + 1].flags.push('INVESTIGATE_NEXT');
+  });
+
+  // theme clustering: which loaded themes drew disturbances
+  const themes = {};
+  items.forEach(it => {
+    const t = themes[it.theme] || (themes[it.theme] = { theme: it.theme, label: THEMES[it.theme] || it.theme, loaded: it.loaded, total: 0, disturbed: 0, indicators: 0 });
+    t.total++;
+    if (it.disturbed) { t.disturbed++; t.indicators += it.indicatorCount; }
+  });
+  const themeList = Object.values(themes).filter(t => t.total > 0).sort((a, b) => (b.disturbed / b.total) - (a.disturbed / a.total) || b.indicators - a.indicators);
+
+  return { median, rtCut, shares, dominant: dominant ? dominant[0] : null, reactionType, themes: themeList };
+}
+
+
+/* ---------------- Import a saved session straight into analysis ----------------
+   Accepts v1 and v2 exports. Missing fields are filled from META; classification and flags are
+   recomputed, so an old export benefits from newer rules. If a scorer URL is set and the session
+   was scored by the placeholder (or not at all), it is re-scored in one batched request. */
+function normalizeItem(raw, k, set) {
+  const index = raw.index || k + 1;
+  const byPos = raw.listPosition ? set.words[raw.listPosition - 1] : null;
+  const byWord = raw.stimulus ? set.words.find(x => x[0] === raw.stimulus) : null;
+  const m = byPos || byWord || set.words[index - 1] || ['?', 'N', 'unknown', 0];
+  return {
+    index, listPosition: raw.listPosition || (set.words.indexOf(m) + 1), stimulus: raw.stimulus || m[0], stimulusPos: { N: 'noun', A: 'adjective', V: 'verb' }[m[1]], theme: m[2], loaded: !!m[3],
+    response: raw.response || '', rawResponse: raw.rawResponse ?? null, corrected: !!raw.corrected, reactionMs: raw.reactionMs ?? null, reactionFifths: raw.reactionMs != null ? +fifths(raw.reactionMs) : null,
+    completionMs: raw.completionMs ?? null, inputMode: raw.inputMode || 'unknown',
+    relatedness: raw.relatedness ?? null, relatednessPrev: raw.relatednessPrev ?? null, scorer: raw.scorer ?? null,
+    rtRatio: null, assoc: null, flags: []
+  };
+}
+async function rescore(items) {
+  const useLocal = !S.backend && $('localmodel').checked;
+  if (!S.backend && !useLocal) return;
+  const need = items.filter(x => x.response && (x.relatedness === null || x.scorer === 'lexical-heuristic' || x.relatednessPrev === null));
+  if (!need.length) return;
+  const pairs = [];
+  need.forEach(it => { const prev = items.find(x => x.index === it.index - 1); pairs.push({ stimulus: it.stimulus, response: it.response }); pairs.push({ stimulus: prev ? prev.stimulus : it.stimulus, response: it.response }); });
+  try {
+    let scores, name;
+    if (S.backend) {
+      const res = await fetch(S.backend + '/api/score', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ pairs }) });
+      if (!res.ok) return;
+      const d = await res.json(); scores = d.scores; name = d.scorer;
+    } else {
+      $('imperr').textContent = 'Loading the on-device scorer…'; $('imperr').classList.remove('hide');
+      if (!(await Local.load())) { $('imperr').classList.add('hide'); return; }
+      scores = await Local.score(pairs); name = LOCAL_NAME; $('imperr').classList.add('hide');
+    }
+    need.forEach((it, i) => { it.relatedness = scores[2 * i]; it.relatednessPrev = it.index > 1 ? scores[2 * i + 1] : null; it.scorer = name; });
+  } catch (e) { $('imperr').classList.add('hide'); }
+}
+async function importSession(text) {
+  const err = $('imperr'); err.classList.add('hide');
+  let payload;
+  try { payload = JSON.parse(text); } catch (e) { err.textContent = 'That is not valid JSON.'; err.classList.remove('hide'); return; }
+  if (!payload || !Array.isArray(payload.items) || !String(payload.schema || '').startsWith('jung-wat/session/')) {
+    err.textContent = 'This file is not a session export (expected schema jung-wat/session/…).'; err.classList.remove('hide'); return;
+  }
+  S.backend = $('backend').value.trim().replace(/\/$/, '');
+  S.subject = payload.subject || 'imported'; S.mode = payload.inputMode || 'unknown'; S.speak = !!payload.spokenStimulus;
+  S.set = setById(payload.set || 'jung1910'); S.shuffle = !!payload.shuffled;
+  S.items = payload.items.map((r, k) => normalizeItem(r, k, S.set)); S.i = S.items.length; S.n = S.items.length;
+  S.imported = { recordedAt: payload.recordedAt, schema: payload.schema };
+  $('setup').classList.add('hide');
+  await rescore(S.items);
+  finish();
+}
+$('impfile').addEventListener('change', e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const r = new FileReader(); r.onload = () => importSession(r.result); r.readAsText(f);
+});
+$('impgo').onclick = () => {
+  const t = $('imptext').value.trim();
+  if (t) importSession(t);
+  else if ($('impfile').files && $('impfile').files[0]) $('impfile').dispatchEvent(new Event('change'));
+  else { $('imperr').textContent = 'Choose a file or paste the JSON first.'; $('imperr').classList.remove('hide'); }
+};
+
+/* ---------------- Results ---------------- */
+const TYPE_LABEL = { inner: 'inner', outer: 'outer', clang: 'clang', remainder: 'remainder', egocentric: 'egocentric', unclassified: '?' };
+async function finish() {
+  Mic.stop();
+  $('test').classList.add('hide'); $('results').classList.remove('hide');
+  $('scorenote').textContent = 'Scoring…';
+  await Promise.allSettled(S.pending);
+  S.items.forEach(it => { it.assoc = classifyRule(it); });
+  await classifyLLM(S.items);
+  const A = analyse(S.items);
+  const HARD = f => !f.startsWith('INVESTIGATE');
+  const flagged = S.items.filter(x => x.disturbed);
+  const scorer = (S.items.find(x => x.scorer) || {}).scorer || '—';
+  const classifier = (S.items.find(x => x.assoc && !x.assoc.source.startsWith('rule')) || { assoc: { source: 'rules only' } }).assoc.source;
+  $('rtitle').textContent = `${S.subject} · ${S.set.label}${S.shuffle ? ' · shuffled' : ''} · ${S.items.length} words` + (S.imported ? ` · imported${S.imported.recordedAt ? ', recorded ' + new Date(S.imported.recordedAt).toLocaleDateString() : ''}` : '');
+  $('s_median').textContent = A.median ? secs(A.median) + ' s' : '–';
+  $('s_flag').textContent = `${flagged.length} / ${S.items.length}`;
+  $('s_scorer').textContent = scorer;
+  $('scorenote').textContent = (scorer === 'lexical-heuristic'
+    ? 'Relatedness came from a string-overlap placeholder, not a language model, so most single-word responses stay unplaced. Turn on "Score on this device" on a hosted page, or run backend/main.py and set its URL. '
+    : `Relatedness from ${scorer} (cosine, 0–1). `) + `Association types from ${classifier}. Reaction times above the median (${secs(A.rtCut)} s) are flagged, per Jung.`;
+
+  // profile
+  const pct = v => Math.round(v * 100) + '%';
+  $('profile').innerHTML = `<div class="eyebrow">Reaction type</div><div class="rtype">${A.reactionType}</div>
+    <div class="shares">${['inner', 'outer', 'clang', 'remainder', 'egocentric'].map(t => `<span><b>${pct(A.shares[t])}</b> ${t}</span>`).join('')}${A.shares.unclassified ? `<span><b>${pct(A.shares.unclassified)}</b> unplaced (needs a scorer)</span>` : ''}</div>`;
+  const loadedThemes = A.themes.filter(t => t.loaded), neutral = A.themes.filter(t => !t.loaded);
+  const row = t => `<tr><td class="w">${t.label}</td><td class="t ${t.disturbed / t.total >= 0.5 ? 'hot' : ''}">${t.disturbed} / ${t.total}</td><td class="t">${t.indicators}</td></tr>`;
+  $('themes').innerHTML = `<thead><tr><th>Theme (loaded stimuli)</th><th>Disturbed</th><th>Indicators</th></tr></thead><tbody>${loadedThemes.map(row).join('')}</tbody>
+    <thead><tr><th>Theme (neutral stimuli)</th><th>Disturbed</th><th>Indicators</th></tr></thead><tbody>${neutral.map(row).join('')}</tbody>`;
+
+  // ledger
+  const tb = $('ledger'); tb.innerHTML = '';
+  S.items.forEach(it => {
+    const tr = document.createElement('tr');
+    const hard = it.flags.filter(HARD), ctx = it.flags.filter(f => !HARD(f));
+    if (it.disturbed) tr.className = 'flagged'; else if (hard.length) tr.className = 'marked'; if (ctx.length) tr.classList.add('investigate');
+    const a = it.assoc || {};
+    const typeTag = it.response ? `<span class="tag type">${TYPE_LABEL[a.type] || '?'}${a.subtype ? ' · ' + a.subtype : ''}</span>` : '';
+    const tags = [typeTag, ...hard.map(f => `<span class="tag">${f.replace(/_/g, ' ')}</span>`), ...ctx.map(f => `<span class="tag ctx">${f.replace(/_/g, ' ')}</span>`)].join('');
+    tr.innerHTML = `<td class="n">${it.index}${it.loaded ? '<span class="ld" title="loaded stimulus">•</span>' : ''}</td><td class="w">${it.stimulus}</td>
+      <td class="r">${it.response || '<span class="muted">—</span>'}${it.corrected ? `<span class="muted" style="font-size:12px"> (heard: ${it.rawResponse})</span>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}</td>
+      <td class="t">${it.reactionMs === null ? '—' : secs(it.reactionMs) + ' s'}</td>
+      <td class="t">${it.rtRatio === null ? '—' : it.rtRatio.toFixed(1)}</td>
+      <td class="c ${CONFIG.flagLowRelatedness && it.relatedness !== null && it.relatedness < CONFIG.relatedThreshold ? 'low' : ''}">${it.relatedness === null ? '—' : it.relatedness.toFixed(2)}</td>`;
+    tb.appendChild(tr);
+  });
+  S.summary = { medianMs: A.median, rtCutoffMs: A.rtCut, scorer, classifier, reactionType: A.reactionType, dominantType: A.dominant, typeShares: A.shares, themes: A.themes, config: CONFIG };
+}
+
+$('export').onclick = () => {
+  const payload = { schema: 'jung-wat/session/v3', set: S.set.id, setLabel: S.set.label, shuffled: !!S.shuffle, subject: S.subject, recordedAt: new Date().toISOString(), userAgent: navigator.userAgent, inputMode: S.mode, spokenStimulus: S.speak, summary: S.summary, items: S.items };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `wat_${S.subject}_${Date.now()}.json`; a.click();
+};
+$('again').onclick = () => { S.imported = null; $('imptext').value = ''; $('impfile').value = ''; $('results').classList.add('hide'); $('setup').classList.remove('hide'); };
+</script>
+</body>
+</html>
